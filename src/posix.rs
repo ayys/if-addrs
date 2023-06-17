@@ -30,6 +30,12 @@ pub fn do_broadcast(ifaddr: &ifaddrs) -> Option<IpAddr> {
     sockaddr::to_ipaddr(ifaddr.ifa_dstaddr)
 }
 
+#[cfg(any(target_arch="wasm32"))]
+pub fn do_broadcast(ifaddr: &ifaddrs) -> Option<IpAddr> {
+    sockaddr::to_ipaddr(ifaddr.ifa_addr)
+}
+
+
 pub struct IfAddrs {
     inner: *mut ifaddrs,
 }
